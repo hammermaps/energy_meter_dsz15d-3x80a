@@ -1,0 +1,22 @@
+[database]
+host = "127.0.0.1"
+port = 3306
+user = "energy_meter"
+password = "BITTE-AENDERN"
+database = "energy_meter"
+table = "meter_pulses"
+connect_timeout = 5
+
+[[channels]]
+name = "s0"
+bcm_pin = 17
+impulses_per_kwh = 1000
+bounce_ms = 30
+edge = "falling"
+
+[[channels]]
+name = "s1"
+bcm_pin = 27
+impulses_per_kwh = 1000
+bounce_ms = 30
+edge = "falling"

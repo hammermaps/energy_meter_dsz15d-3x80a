@@ -1,0 +1,17 @@
+[Unit]
+Description=Eltako DSZ15D-3x80A Impuls-Erfassung
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+DynamicUser=yes
+SupplementaryGroups=gpio
+WorkingDirectory=/opt/energy-meter
+ExecStart=/opt/energy-meter/.venv/bin/python -m energy_meter_dsz15d_3x80a --config /etc/energy-meter/config.toml
+Restart=always
+RestartSec=5
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target

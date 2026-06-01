@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "energy-meter-dsz15d-3x80a"
+version = "0.1.0"
+description = "S0/S1 Impuls-Erfassung fuer den Eltako DSZ15D-3x80A auf Raspberry Pi"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+  "mariadb>=1.1.10",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
