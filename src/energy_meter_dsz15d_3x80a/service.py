@@ -47,21 +47,23 @@ class PulseProcessor:
             state = self._states[channel]
             state.pulse_total += 1
             state.kwh_total += delta_kwh
+            pulse_total = state.pulse_total
+            kwh_total = state.kwh_total
 
             self._repository.record_pulse(
                 channel=channel,
                 captured_at=event_time,
-                pulse_total=state.pulse_total,
+                pulse_total=pulse_total,
                 delta_pulses=1,
-                kwh_total=state.kwh_total,
+                kwh_total=kwh_total,
                 delta_kwh=delta_kwh,
             )
 
-        self._logger.info(
+        self._logger.debug(
             "Impuls erfasst: channel=%s pulse_total=%s kwh_total=%s timestamp=%s",
             channel,
-            state.pulse_total,
-            state.kwh_total,
+            pulse_total,
+            kwh_total,
             event_time.isoformat(),
         )
 

@@ -62,10 +62,9 @@ def main(argv: list[str] | None = None) -> int:
     signal.signal(signal.SIGINT, request_stop)
     signal.signal(signal.SIGTERM, request_stop)
 
-    logging.getLogger("meter").info("Starte Impuls-Erfassung fuer %s Kanaele.", len(config.channels))
-    source.start()
-
     try:
+        source.start()
+        logging.getLogger("meter").info("Starte Impuls-Erfassung fuer %s Kanaele.", len(config.channels))
         while not stop_event.wait(1):
             pass
     finally:

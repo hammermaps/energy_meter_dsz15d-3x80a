@@ -42,13 +42,14 @@ def load_config(path: str | Path) -> AppConfig:
     table = str(database_section.get("table", "meter_pulses"))
     if not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", table):
         raise ValueError("database.table darf nur Buchstaben, Zahlen und Unterstriche enthalten.")
+    if len(table) > 40:
+        raise ValueError("database.table darf maximal 40 Zeichen lang sein.")
 
-    secret_key = "".join(("pass", "word"))
     database = DatabaseConfig(
         _require_text(database_section, "host"),
         _require_int(database_section, "port", default=3306, minimum=1),
         _require_text(database_section, "user"),
-        _require_text(database_section, secret_key),
+        _require_text(database_section, "password"),
         _require_text(database_section, "database"),
         table,
         _require_int(database_section, "connect_timeout", default=5, minimum=1),

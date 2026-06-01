@@ -47,6 +47,12 @@ bcm_pin = 17
         with self.assertRaisesRegex(ValueError, "Doppelter GPIO-Pin"):
             load_config(self._write_config(content))
 
+    def test_rejects_overlong_table_name(self) -> None:
+        content = VALID_CONFIG.replace('database = "energy_meter"', 'database = "energy_meter"\ntable = "a2345678901234567890123456789012345678901"')
+
+        with self.assertRaisesRegex(ValueError, "maximal 40 Zeichen"):
+            load_config(self._write_config(content))
+
 
 if __name__ == "__main__":
     unittest.main()

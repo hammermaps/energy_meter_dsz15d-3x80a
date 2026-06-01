@@ -26,6 +26,7 @@ class RpiGpioPulseSource:
 
         gpio.setwarnings(False)
         gpio.setmode(gpio.BCM)
+        self._gpio = gpio
 
         edge_map = {
             "falling": gpio.FALLING,
@@ -33,16 +34,19 @@ class RpiGpioPulseSource:
             "both": gpio.BOTH,
         }
 
-        for channel in self._channels:
-            gpio.setup(channel.bcm_pin, gpio.IN, pull_up_down=gpio.PUD_UP)
-            gpio.add_event_detect(
-                channel.bcm_pin,
-                edge_map[channel.edge],
-                callback=self._make_callback(channel.name),
-                bouncetime=channel.bounce_ms,
-            )
-
-        self._gpio = gpio
+        try:
+            for channel in self._channels:
+                gpio.setup(channel.bcm_pin, gpio.IN, pull_up_down=gpio.PUD_UP)
+                gpio.add_event_detect(
+                    channel.bcm_pin,
+                    edge_map[channel.edge],
+                    callback=self._make_callback(channel.name),
+                    bouncetime=channel.bounce_ms,
+                )
+        except Exception:
+            gpio.cleanup()
+            self._gpio = None
+            raise
 
     def stop(self) -> None:
         if self._gpio is None:

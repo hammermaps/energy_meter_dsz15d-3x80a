@@ -5,8 +5,8 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-User=pi
-Group=pi
+DynamicUser=yes
+SupplementaryGroups=gpio
 WorkingDirectory=/opt/energy-meter
 ExecStart=/opt/energy-meter/.venv/bin/python -m energy_meter_dsz15d_3x80a --config /etc/energy-meter/config.toml
 Restart=always

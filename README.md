@@ -92,7 +92,7 @@ edge = "falling"
 Konfiguration pruefen:
 
 ```bash
-PYTHONPATH=src python3 -m energy_meter_dsz15d_3x80a --config config/energy-meter.example.toml --check-config
+PYTHONPATH=src python3.14 -m energy_meter_dsz15d_3x80a --config config/energy-meter.example.toml --check-config
 ```
 
 Danach startet `systemd` die eigentliche Erfassung und ueberwacht den Prozess per `Restart=always`.
