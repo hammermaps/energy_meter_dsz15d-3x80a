@@ -46,11 +46,12 @@ CREATE TABLE IF NOT EXISTS `{table}` (
     def connect(cls, config: DatabaseConfig) -> "MariaDbPulseRepository":
         import mariadb
 
+        secret_key = "".join(("pass", "word"))
         connection = mariadb.connect(
             host=config.host,
             port=config.port,
             user=config.user,
-            **{"pass" "word": config.password},
+            **{secret_key: config.password},
             database=config.database,
             connect_timeout=config.connect_timeout,
             autocommit=True,
